@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+
+    <!-- Primary SEO -->
+    <title>
+      Georgia Lottery Number Generator &amp; Mega Millions Stats — Number Lab
+    </title>
+    <meta
+      name="description"
+      content="Free Georgia Lottery number generator with real Mega Millions statistics: hot &amp; cold numbers, frequency charts, jackpot odds and probability from past winning numbers. Build your own set or quick pick."
+    />
+    <meta
+      name="keywords"
+      content="Georgia Lottery, Mega Millions, lottery number generator, hot and cold numbers, winning numbers, lottery statistics, jackpot odds, quick pick, frequency"
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Number Lab" />
+    <link rel="canonical" href="https://your-domain.example/" />
+
+    <!-- Geo (Georgia, US) -->
+    <meta name="geo.region" content="US-GA" />
+    <meta name="geo.placename" content="Georgia" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Number Lab" />
+    <meta
+      property="og:title"
+      content="Georgia Lottery Number Generator &amp; Mega Millions Stats"
+    />
+    <meta
+      property="og:description"
+      content="Generate Georgia Mega Millions numbers and explore real winning-number statistics — hot/cold numbers, frequency, and jackpot odds."
+    />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://your-domain.example/" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Georgia Lottery Number Generator &amp; Mega Millions Stats"
+    />
+    <meta
+      name="twitter:description"
+      content="Generate Georgia Mega Millions numbers and explore real winning-number statistics, odds and probability."
+    />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Number Lab" />
+    <meta name="theme-color" content="#073A24" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Number Lab — Georgia Lottery Number Generator",
+        "url": "https://your-domain.example/",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any (web browser)",
+        "browserRequirements": "Requires JavaScript",
+        "description": "Free Georgia Lottery number generator and Mega Millions statistics tool. Generate quick picks, build your own set, and explore hot/cold numbers, frequency, probability and jackpot odds from real past winning numbers.",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "about": "Georgia Lottery Mega Millions winning numbers and statistics"
+      }
+    </script>
+  </head>
+  <body>
+    <div class="app">
+      <!-- Header -->
+      <header class="topbar">
+        <div class="topbar-inner">
+          <div class="brand">
+            <svg class="brand-logo" viewBox="0 0 40 40" aria-hidden="true">
+              <defs>
+                <radialGradient id="cg" cx="38%" cy="32%" r="75%">
+                  <stop offset="0%" stop-color="#F4D77A" />
+                  <stop offset="55%" stop-color="#D9B043" />
+                  <stop offset="100%" stop-color="#A9802A" />
+                </radialGradient>
+              </defs>
+              <circle cx="20" cy="20" r="19" fill="url(#cg)" stroke="#A9802A" stroke-width="1" />
+              <circle cx="20" cy="20" r="15.5" fill="none" stroke="#A9802A" stroke-width="0.8" opacity="0.6" />
+              <g fill="#0B5234">
+                <circle cx="20" cy="14.5" r="4.1" />
+                <circle cx="14.5" cy="20" r="4.1" />
+                <circle cx="25.5" cy="20" r="4.1" />
+                <circle cx="20" cy="25.5" r="4.1" />
+                <rect x="19.2" y="20" width="1.6" height="7" rx="0.8" transform="rotate(-20 20 23)" />
+              </g>
+              <circle cx="20" cy="20" r="2.2" fill="#5DE85F" opacity="0.9" />
+            </svg>
+            <div>
+              <div class="brand-eyebrow">NUMBER LAB</div>
+              <h1 class="brand-title">Lottery</h1>
+            </div>
+          </div>
+
+          <div class="game-card">
+            <div class="game-card-text">
+              <select id="game" class="game-select" aria-label="Select lottery game"></select>
+              <div id="gameInfo" class="game-sub"></div>
+            </div>
+            <span class="chev" aria-hidden="true">⌄</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <main class="scroll">
+        <p class="sr-only">
+          Number Lab is a free Georgia Lottery number generator and Mega
+          Millions statistics tool. Generate quick-pick numbers, build your own
+          combination, and explore hot and cold numbers, draw frequency,
+          probability and jackpot odds based on real past Georgia Mega Millions
+          winning numbers.
+        </p>
+        <!-- ============ DRAW ============ -->
+        <section class="view" data-view="generate">
+          <div class="draw-grid">
+            <div class="draw-left">
+              <h2 class="title">Draw your luck</h2>
+              <p class="lede" id="strategyDesc"></p>
+
+              <div class="machine" id="machine">
+                <div class="globe-wrap">
+                  <div class="globe-ring"></div>
+                  <div class="globe">
+                    <div class="globe-balls" id="globeBalls"></div>
+                    <div class="globe-glare"></div>
+                  </div>
+                  <div class="globe-status" id="machineStatus">READY</div>
+                </div>
+                <div class="machine-neck"></div>
+                <div class="machine-base"></div>
+              </div>
+
+              <button id="generate" class="lever">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 2c.6 4.8 2.6 6.8 7.4 7.4C14.6 10 12.6 12 12 16.8 11.4 12 9.4 10 4.6 9.4 9.4 8.8 11.4 6.8 12 2Z" />
+                </svg>
+                <span class="lever-label">Pull to draw</span>
+              </button>
+
+              <p class="fairness-note" role="note">
+                Just for fun — no strategy changes your odds. Every combination
+                is equally likely on every draw.
+              </p>
+
+              <div class="options">
+                <div class="row-between">
+                  <span class="row-label" id="strategyLabel">Strategy</span>
+                  <div class="select-field">
+                    <select id="strategy" aria-labelledby="strategyLabel"></select>
+                    <span class="chev" aria-hidden="true">⌄</span>
+                  </div>
+                </div>
+                <div class="row-between">
+                  <span class="row-label">Number of sets</span>
+                  <div class="stepper">
+                    <button type="button" class="stepper-btn" data-step="-1" aria-label="Fewer sets">−</button>
+                    <span class="stepper-value" id="setsValue" role="status" aria-live="polite" aria-label="Number of sets">1</span>
+                    <button type="button" class="stepper-btn" data-step="1" aria-label="More sets">+</button>
+                    <input type="hidden" id="sets" value="1" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="draw-right">
+              <div class="rule"></div>
+              <div class="eyebrow">Your numbers</div>
+              <div class="reel">
+                <div class="reel-inner">
+                  <div id="results" class="results"></div>
+                  <div id="resultsMeta" class="results-meta"></div>
+                </div>
+              </div>
+              <button id="clear" class="text-btn center">Clear results</button>
+
+              <!-- Number Lab's own 15 predictions, revealed by the star -->
+              <div id="ourReveal" class="our-reveal" hidden>
+                <button
+                  id="ourStar"
+                  class="our-star"
+                  aria-expanded="false"
+                  aria-controls="ourPredictions"
+                >
+                  <span class="star-glyph" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M12 2.2l2.9 6.26 6.86.72-5.12 4.6 1.43 6.74L12 17.7l-6 3.62 1.43-6.74L2.3 9.18l6.86-.72z" />
+                    </svg>
+                  </span>
+                  <span class="our-star-label" id="ourStarLabel">
+                    Reveal Number Lab's 15 predictions
+                  </span>
+                </button>
+                <div id="ourPredictions" class="our-predictions" hidden></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ BUILD ============ -->
+        <section class="view" data-view="build" hidden>
+          <h2 class="title">Build your own</h2>
+          <p class="lede">
+            Numbers ranked by how often they've been drawn. Tap to drop them in
+            the tray.
+          </p>
+
+          <div class="reel">
+            <div class="reel-inner">
+              <div id="yourCombo" class="your-combo"></div>
+              <div id="comboCount" class="combo-count"></div>
+            </div>
+          </div>
+
+          <div class="builder-actions">
+            <button id="builderClear" class="text-btn">Clear pick</button>
+            <span class="dot-sep">·</span>
+            <button id="builderSave" class="text-btn">Save set</button>
+            <span class="dot-sep">·</span>
+            <button id="builderCopy" class="text-btn">Copy</button>
+          </div>
+
+          <div id="freqMainTitle" class="eyebrow">Main numbers</div>
+          <div id="freqMain" class="num-list"></div>
+
+          <div id="freqSpecialTitle" class="eyebrow">Special</div>
+          <div id="freqSpecial" class="num-list"></div>
+        </section>
+
+        <!-- ============ STATS ============ -->
+        <section class="view" data-view="stats" hidden>
+          <h2 class="title">Probability &amp; stats</h2>
+          <p id="dataWindow" class="lede"></p>
+
+          <div class="hero-odds">
+            <div class="hero-inner" id="statsHero"></div>
+          </div>
+
+          <div id="statFigures"></div>
+
+          <div class="eyebrow stats-eyebrow">Prize odds · theoretical (1 in)</div>
+          <div id="oddsTable" class="odds-card"></div>
+
+          <div class="eyebrow stats-eyebrow">Goodness of fit vs. pure chance</div>
+          <div id="fitStats"></div>
+
+          <div class="eyebrow stats-eyebrow">Draw distribution</div>
+          <div id="distStats"></div>
+        </section>
+
+        <!-- ============ ACCOUNT ============ -->
+        <section class="view" data-view="account" hidden>
+          <h2 class="title">Account</h2>
+
+          <div class="profile">
+            <div class="avatar" id="avatar">G</div>
+            <div class="profile-text">
+              <div class="profile-name" id="profileName">Guest</div>
+              <div class="profile-sub" id="profileSince"></div>
+            </div>
+            <button id="editName" class="text-btn">Edit</button>
+          </div>
+
+          <div class="eyebrow stats-eyebrow">Activity</div>
+          <div id="accountFigures"></div>
+
+          <div class="eyebrow stats-eyebrow">Preferences</div>
+          <div id="accountPrefs"></div>
+
+          <div class="eyebrow stats-eyebrow">Saved numbers</div>
+          <div id="savedList" class="saved-list"></div>
+
+          <button id="resetData" class="text-btn center danger">
+            Reset all data
+          </button>
+        </section>
+
+        <footer class="site-footer">
+          <div class="footer-brand">Number Lab</div>
+          <p class="footer-text">
+            For entertainment only. Past results never influence future draws —
+            every number has the same odds every time, and no strategy or
+            prediction can change them. Play responsibly. You must be of legal
+            age to play the lottery.
+          </p>
+          <p class="footer-text">
+            Independent project — not affiliated with, endorsed by, or sponsored
+            by the Georgia Lottery Corporation or Mega Millions. Winning numbers
+            are sourced from public records and may be delayed; always confirm
+            with official sources before claiming any prize.
+          </p>
+          <p class="footer-text footer-help">
+            Have a gambling problem? Call
+            <a href="tel:18004262537">1-800-GAMBLER</a> (confidential, 24/7).
+          </p>
+          <p class="footer-contact">
+            <a href="mailto:artivicolab@gmail.com">Contact</a>
+          </p>
+          <p class="footer-built">
+            Built by
+            <a href="https://artivicolab.com" target="_blank" rel="noopener">
+              artivicolab.com
+            </a>
+          </p>
+          <p class="footer-copy">
+            © <span id="footerYear">2026</span> Number Lab · Georgia Lottery
+            tools
+          </p>
+        </footer>
+      </main>
+
+      <!-- Header pull-down handle -->
+      <button id="navHandle" class="nav-handle" aria-label="Show or hide the header">
+        <svg class="nav-handle-glyph" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </button>
+
+      <!-- Bottom tab bar -->
+      <nav class="tab-bar" aria-label="Primary">
+        <div class="tab-bar-inner" role="tablist">
+          <button class="tab active" data-target="generate" role="tab" aria-selected="true">
+            <svg class="tab-glyph" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 2c.6 4.8 2.6 6.8 7.4 7.4C14.6 10 12.6 12 12 16.8 11.4 12 9.4 10 4.6 9.4 9.4 8.8 11.4 6.8 12 2Z" />
+              <path d="M18.5 14c.25 1.9 1 2.65 2.9 2.9-1.9.25-2.65 1-2.9 2.9-.25-1.9-1-2.65-2.9-2.9 1.9-.25 2.65-1 2.9-2.9Z" />
+            </svg>
+            <span class="tab-label">Draw</span>
+          </button>
+          <button class="tab" data-target="build" role="tab" aria-selected="false">
+            <svg class="tab-glyph stroke" viewBox="0 0 24 24" aria-hidden="true">
+              <ellipse cx="12" cy="8" rx="8" ry="3.4" />
+              <path d="M4 8v4c0 1.9 3.6 3.4 8 3.4s8-1.5 8-3.4V8" />
+              <path d="M4 12v4c0 1.9 3.6 3.4 8 3.4s8-1.5 8-3.4v-4" />
+            </svg>
+            <span class="tab-label">Build</span>
+          </button>
+          <button class="tab" data-target="stats" role="tab" aria-selected="false">
+            <svg class="tab-glyph stroke tab-stats" viewBox="0 0 24 24" aria-hidden="true">
+              <line class="bar bar1" x1="5" y1="20" x2="5" y2="13" />
+              <line class="bar bar2" x1="12" y1="20" x2="12" y2="6" />
+              <line class="bar bar3" x1="19" y1="20" x2="19" y2="10" />
+            </svg>
+            <span class="tab-label">Stats</span>
+          </button>
+          <button class="tab" data-target="account" role="tab" aria-selected="false">
+            <svg class="tab-glyph stroke" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="8" r="3.6" />
+              <path d="M5.5 20a6.5 6.5 0 0 1 13 0" />
+            </svg>
+            <span class="tab-label">Account</span>
+          </button>
+        </div>
+      </nav>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

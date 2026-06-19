@@ -1,0 +1,7 @@
+# Number Lab — robots
+# Replace the domain below with the real one before deploy.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://your-domain.example/sitemap.xml
