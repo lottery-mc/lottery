@@ -9,9 +9,22 @@ multi-column layout on wide screens.
 - **Vanilla HTML/CSS/JS. No build step, no dependencies, no framework.**
 - Just open `index.html` in a browser. Fonts (Fraunces) load from Google Fonts.
 
+## Multi-page (not an SPA)
+Each tab is its own HTML page with its own SEO `<head>`:
+- `index.html` = Draw (home, `/`), `build.html`, `stats.html`, `account.html`
+  (account is `noindex`).
+- The **header, footer, nav handle, and bottom tab-bar are duplicated** in every
+  page (the tab-bar items are `<a>` links; the current page's link has
+  `.active` + `aria-current="page"`). If you change the chrome, change it in all
+  four pages. `app.js` is shared and **initializes each section only if its root
+  element exists** (`initDrawPage`/`initBuildPage`/`initAccountPage` + `renderStats`).
+- Each page's main heading is the `<h1 class="title">`; the brand wordmark is a
+  `<span>` (not an h1) so every page has one unique H1.
+
 ## Files
-- `index.html` — markup, SEO `<head>` (meta, Open Graph, Twitter, JSON-LD,
-  geo=US-GA), the four tab views, and the footer.
+- `index.html` / `build.html` / `stats.html` / `account.html` — the four pages.
+  Shared `<head>`: SEO meta, Open Graph, Twitter, geo=US-GA, full favicon set +
+  `manifest.json`. Home has WebApplication JSON-LD; subpages have BreadcrumbList.
 - `styles.css` — all styling + animations. CSS variables at `:root` define the
   palette (`--felt`, `--gold`, `--neon`, `--cream`, etc.) and `--gold-foil`.
 - `app.js` — everything dynamic: stats/probability math, the strategy engine,
@@ -60,8 +73,16 @@ multi-column layout on wide screens.
   footer (affiliation disclaimer, 1-800-GAMBLER, legal age). Keep it honest —
   no strategy/prediction changes the odds.
 
+## Dates / SEO freshness
+- `.githooks/pre-commit` runs `.githooks/stamp-dates.js` on every commit to set
+  today's date in `sitemap.xml` `<lastmod>` and the JSON-LD `dateModified`.
+  Enabled via `git config core.hooksPath .githooks` (already set in this clone;
+  re-run it after a fresh clone). The stamper does safe full read/writes — never
+  use `perl -pi` here (it deleted index.html once).
+
 ## Running
-- App: open `index.html`.
+- App: open `index.html` (serve from root so `/build.html`, `/favicon.ico`,
+  `/manifest.json` resolve).
 - Tests: `node --test` (from the project root).
 
 See `todo.md` for outstanding work.

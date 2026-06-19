@@ -29,6 +29,13 @@
 - [ ] `package.json` with `"test": "node --test"` for `npm test`.
 - [ ] Dark/alt theme variants.
 
+## Done (recent SEO/infra)
+- [x] Split into multi-page site: `/`, `/build.html`, `/stats.html`,
+      `/account.html` (per-page titles/descriptions/canonical, breadcrumbs).
+- [x] Full favicon set + `manifest.json` wired into every page.
+- [x] Auto date-stamp hook (`.githooks/pre-commit` + `stamp-dates.js`).
+- [x] Pushed to github.com/lottery-mc/lottery.
+
 ## Done (recent)
 - [x] Casino felt + gold theme; tumbling ball machine + lever.
 - [x] Build-your-own frequency ranking; full probability/stats panel.

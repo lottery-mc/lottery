@@ -231,6 +231,8 @@ body::after {
   display: flex;
   align-items: center;
   gap: 11px;
+  text-decoration: none;
+  color: inherit;
 }
 
 .brand-logo {
@@ -1399,6 +1401,7 @@ body::after {
   gap: 4px;
   padding: 2px 0;
   color: var(--sage);
+  text-decoration: none;
 }
 .tab.active {
   color: var(--neon);

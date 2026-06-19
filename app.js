@@ -430,37 +430,25 @@ function saveSet(entry, btn) {
   }
 }
 
+// Each page shares the header (game select) + chrome; only one content
+// section exists per page, so every section initializes defensively.
 function initUI() {
   const gameSelect = el("game");
-  const strategySelect = el("strategy");
-  const setsInput = el("sets");
+  const app = document.querySelector(".app");
 
-  // Populate games
+  // Header game selector (present on every page).
   Object.entries(LOTTERIES).forEach(([key, game]) => {
     const opt = document.createElement("option");
     opt.value = key;
     opt.textContent = game.name;
     gameSelect.appendChild(opt);
   });
-
-  // Populate strategies
-  Object.entries(STRATEGIES).forEach(([key, s]) => {
-    const opt = document.createElement("option");
-    opt.value = key;
-    opt.textContent = s.label;
-    strategySelect.appendChild(opt);
-  });
-
-  // Restore saved settings + picks from localStorage.
   if (S.game && LOTTERIES[S.game]) gameSelect.value = S.game;
-  if (S.strategy && STRATEGIES[S.strategy]) strategySelect.value = S.strategy;
-  setsInput.value = S.sets || 1;
+
+  // Restore manual pick (used by the Build page).
   pick.main = new Set(S.pickMain || []);
   pick.special = S.pickSpecial ?? null;
 
-  const renderStrategyDesc = () => {
-    el("strategyDesc").textContent = STRATEGIES[strategySelect.value].desc;
-  };
   const renderGameInfo = () => {
     const g = LOTTERIES[gameSelect.value];
     const n = g.draws.length;
@@ -470,27 +458,56 @@ function initUI() {
   };
 
   gameSelect.addEventListener("change", () => {
-    renderGameInfo();
-    resetPick();
-    renderBuilder(gameSelect.value);
-    renderStats(gameSelect.value);
-    el("results").innerHTML = emptyResultsHTML(LOTTERIES[gameSelect.value]);
-    el("resultsMeta").textContent = "";
-    hideOurStar();
     S.game = gameSelect.value;
     S.lastResults = null;
+    resetPick();
     saveStore();
-    renderAccount();
+    renderGameInfo();
+    if (el("results")) {
+      el("results").innerHTML = emptyResultsHTML(LOTTERIES[gameSelect.value]);
+      el("resultsMeta").textContent = "";
+      hideOurStar();
+    }
+    if (el("freqMain")) renderBuilder(gameSelect.value);
+    if (el("statsHero")) renderStats(gameSelect.value);
+    if (el("profileName")) renderAccount();
   });
+
+  renderGameInfo();
+
+  // Page-specific sections.
+  if (el("globeBalls")) initDrawPage(gameSelect);
+  if (el("freqMain")) initBuildPage(gameSelect);
+  if (el("statsHero")) renderStats(gameSelect.value);
+  if (el("profileName")) initAccountPage();
+
+  initChrome(app);
+}
+
+/* ---- Draw page ---- */
+function initDrawPage(gameSelect) {
+  const strategySelect = el("strategy");
+  const setsInput = el("sets");
+  const setsValue = el("setsValue");
+
+  Object.entries(STRATEGIES).forEach(([key, s]) => {
+    const opt = document.createElement("option");
+    opt.value = key;
+    opt.textContent = s.label;
+    strategySelect.appendChild(opt);
+  });
+  if (S.strategy && STRATEGIES[S.strategy]) strategySelect.value = S.strategy;
+  setsInput.value = S.sets || 1;
+
+  const renderStrategyDesc = () => {
+    el("strategyDesc").textContent = STRATEGIES[strategySelect.value].desc;
+  };
   strategySelect.addEventListener("change", () => {
     renderStrategyDesc();
     S.strategy = strategySelect.value;
     saveStore();
-    renderAccount();
   });
 
-  // Sets stepper
-  const setsValue = el("setsValue");
   const syncSets = () => {
     if (setsValue) setsValue.textContent = setsInput.value;
   };
@@ -515,7 +532,6 @@ function initUI() {
     setsInput.value = sets;
     syncSets();
 
-    // Spin the drum, then reveal.
     spinning = true;
     const machine = el("machine");
     const lever = el("generate");
@@ -540,21 +556,17 @@ function initUI() {
       S.sets = sets;
       S.generatedCount = (S.generatedCount || 0) + tickets.length;
       saveStore();
-      renderAccount();
 
-      renderMachine(); // reshuffle the drum for next time
+      renderMachine();
       machine.classList.remove("spinning");
       lever.classList.remove("busy");
       el("machineStatus").textContent = "READY";
       if (leverLabel) leverLabel.textContent = "Draw again";
       spinning = false;
-
-      // They've drawn their own — now offer Number Lab's picks via the star.
       showOurStar();
     }, 1500);
   });
 
-  // Star reveals Number Lab's own 15 predictions.
   el("ourStar").addEventListener("click", () => {
     const panel = el("ourPredictions");
     if (panel.hidden) {
@@ -577,42 +589,23 @@ function initUI() {
     saveStore();
   });
 
-  initTabs();
+  renderStrategyDesc();
+  renderMachine();
 
-  // Collapsible header. The handle (shown only when hidden) brings it back;
-  // scrolling down tucks it away.
-  const app = document.querySelector(".app");
-  const topbar = document.querySelector(".topbar");
+  if (S.lastResults && S.lastResults.length) {
+    const g = LOTTERIES[S.lastGame] || LOTTERIES[gameSelect.value];
+    renderTickets(g, S.lastResults, S.lastStrategyLabel || "Saved set", false);
+    const leverLabel = el("generate").querySelector(".lever-label");
+    if (leverLabel) leverLabel.textContent = "Draw again";
+    showOurStar();
+  } else {
+    el("results").innerHTML = emptyResultsHTML(LOTTERIES[gameSelect.value]);
+  }
+}
 
-  // Keep the content's top padding matched to the (fixed) header height.
-  const syncTopbarH = () =>
-    document.documentElement.style.setProperty(
-      "--topbar-h",
-      topbar.offsetHeight + "px"
-    );
-  syncTopbarH();
-  if (window.ResizeObserver) new ResizeObserver(syncTopbarH).observe(topbar);
-  window.addEventListener("load", syncTopbarH);
-
-  el("navHandle").addEventListener("click", () => {
-    app.classList.remove("nav-collapsed");
-  });
-
-  const footerYear = el("footerYear");
-  if (footerYear) footerYear.textContent = new Date().getFullYear();
-
-  const headerScroller = document.querySelector(".scroll");
-  let lastY = 0;
-  headerScroller.addEventListener(
-    "scroll",
-    () => {
-      const y = headerScroller.scrollTop;
-      if (y > lastY + 6 && y > 80) app.classList.add("nav-collapsed");
-      else if (y < lastY - 6 || y < 20) app.classList.remove("nav-collapsed");
-      lastY = y;
-    },
-    { passive: true }
-  );
+/* ---- Build page ---- */
+function initBuildPage(gameSelect) {
+  renderBuilder(gameSelect.value);
 
   el("builderClear").addEventListener("click", () => {
     resetPick();
@@ -642,6 +635,11 @@ function initUI() {
       setTimeout(() => (btn.textContent = prev), 1200);
     });
   });
+}
+
+/* ---- Account page ---- */
+function initAccountPage() {
+  renderAccount();
 
   el("editName").addEventListener("click", () => {
     const v = prompt("Your name", S.name || "Guest");
@@ -658,24 +656,39 @@ function initUI() {
       location.reload();
     }
   });
+}
 
-  renderStrategyDesc();
-  renderGameInfo();
-  renderBuilder(gameSelect.value);
-  renderStats(gameSelect.value);
-  renderAccount();
-  renderMachine();
+/* ---- Shared chrome: collapsible header, footer year ---- */
+function initChrome(app) {
+  const topbar = document.querySelector(".topbar");
+  const syncTopbarH = () =>
+    document.documentElement.style.setProperty(
+      "--topbar-h",
+      topbar.offsetHeight + "px"
+    );
+  syncTopbarH();
+  if (window.ResizeObserver) new ResizeObserver(syncTopbarH).observe(topbar);
+  window.addEventListener("load", syncTopbarH);
 
-  // Restore last generated results (without replaying the animation).
-  if (S.lastResults && S.lastResults.length) {
-    const g = LOTTERIES[S.lastGame] || LOTTERIES[gameSelect.value];
-    renderTickets(g, S.lastResults, S.lastStrategyLabel || "Saved set", false);
-    const leverLabel = el("generate").querySelector(".lever-label");
-    if (leverLabel) leverLabel.textContent = "Draw again";
-    showOurStar();
-  } else {
-    el("results").innerHTML = emptyResultsHTML(LOTTERIES[gameSelect.value]);
-  }
+  el("navHandle").addEventListener("click", () => {
+    app.classList.remove("nav-collapsed");
+  });
+
+  const footerYear = el("footerYear");
+  if (footerYear) footerYear.textContent = new Date().getFullYear();
+
+  const scroller = document.querySelector(".scroll");
+  let lastY = 0;
+  scroller.addEventListener(
+    "scroll",
+    () => {
+      const y = scroller.scrollTop;
+      if (y > lastY + 6 && y > 80) app.classList.add("nav-collapsed");
+      else if (y < lastY - 6 || y < 20) app.classList.remove("nav-collapsed");
+      lastY = y;
+    },
+    { passive: true }
+  );
 }
 
 /* Number Lab's own model picks — a stats-blended strategy. */
@@ -752,34 +765,6 @@ function emptyResultsHTML(game) {
     <div class="empty-slots">${slots}<span class="combo-plus">+</span><span class="ball slot special"></span></div>
     <p>Pull <b>the lever</b> for 15 predictions.</p>
   </div>`;
-}
-
-/* Bottom tab-bar navigation between the three views. */
-function initTabs() {
-  const tabs = document.querySelectorAll(".tab");
-  const views = document.querySelectorAll(".view");
-  const scroller = document.querySelector(".scroll");
-
-  const syncSelected = () =>
-    tabs.forEach((t) =>
-      t.setAttribute("aria-selected", t.classList.contains("active") ? "true" : "false")
-    );
-
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", () => {
-      const target = tab.dataset.target;
-      tabs.forEach((t) => t.classList.toggle("active", t === tab));
-      views.forEach((v) =>
-        v.toggleAttribute("hidden", v.dataset.view !== target)
-      );
-      syncSelected();
-      if (target === "account") renderAccount();
-      // Snap instantly to the top and reveal the header — no smooth-scroll lag.
-      if (scroller) scroller.scrollTop = 0;
-      document.querySelector(".app").classList.remove("nav-collapsed");
-    });
-  });
-  syncSelected();
 }
 
 /* ------------------------------------------------------------------ *

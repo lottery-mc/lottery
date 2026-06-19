@@ -7,41 +7,41 @@
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
 
-    <title>Georgia Lottery Number Generator (Mega Millions) | Number Lab</title>
+    <title>Mega Millions Odds &amp; Statistics (Georgia) | Number Lab</title>
     <meta
       name="description"
-      content="Free Georgia Mega Millions number generator. Pull the lever for a quick pick or smart set, then reveal Number Lab's 15 model predictions. Based on real past winning numbers."
+      content="Real Georgia Mega Millions statistics: jackpot odds, prize-tier probabilities, hot &amp; cold numbers, Pearson χ², and draw distribution from past winning numbers."
     />
     <meta
       name="keywords"
-      content="Georgia Lottery, Mega Millions, lottery number generator, quick pick, lucky numbers, predictions"
+      content="Mega Millions odds, jackpot odds, lottery probability, Georgia Lottery statistics, prize tiers, hot cold numbers"
     />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="author" content="Number Lab" />
-    <link rel="canonical" href="https://lottery.artivicolab.com/" />
+    <link rel="canonical" href="https://lottery.artivicolab.com/stats.html" />
 
     <meta name="geo.region" content="US-GA" />
     <meta name="geo.placename" content="Georgia" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Number Lab" />
-    <meta property="og:title" content="Georgia Lottery Number Generator (Mega Millions)" />
+    <meta property="og:title" content="Mega Millions Odds &amp; Statistics (Georgia)" />
     <meta
       property="og:description"
-      content="Pull the lever for a Georgia Mega Millions quick pick, then reveal Number Lab's 15 model predictions."
+      content="Jackpot odds, prize-tier probabilities, hot/cold numbers and draw stats from real Georgia Mega Millions draws."
     />
     <meta property="og:locale" content="en_US" />
-    <meta property="og:url" content="https://lottery.artivicolab.com/" />
+    <meta property="og:url" content="https://lottery.artivicolab.com/stats.html" />
     <meta property="og:image" content="https://lottery.artivicolab.com/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Number Lab — Georgia Lottery number generator" />
+    <meta property="og:image:alt" content="Number Lab — Mega Millions odds and statistics" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Georgia Lottery Number Generator (Mega Millions)" />
+    <meta name="twitter:title" content="Mega Millions Odds &amp; Statistics (Georgia)" />
     <meta
       name="twitter:description"
-      content="Quick-pick Georgia Mega Millions numbers, then reveal Number Lab's 15 predictions."
+      content="Jackpot odds, prize-tier probabilities and draw stats from real Georgia Mega Millions draws."
     />
     <meta name="twitter:image" content="https://lottery.artivicolab.com/og-image.png" />
 
@@ -71,24 +71,11 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Number Lab — Georgia Lottery Number Generator",
-        "url": "https://lottery.artivicolab.com/",
-        "image": "https://lottery.artivicolab.com/og-image.png",
-        "applicationCategory": "UtilitiesApplication",
-        "operatingSystem": "Any (web browser)",
-        "browserRequirements": "Requires JavaScript",
-        "description": "Free Georgia Lottery number generator and Mega Millions statistics tool.",
-        "inLanguage": "en-US",
-        "datePublished": "2026-06-18",
-        "dateModified": "2026-06-19",
-        "isAccessibleForFree": true,
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-        "publisher": {
-          "@type": "Organization",
-          "name": "Artivico Lab",
-          "url": "https://artivicolab.com"
-        }
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://lottery.artivicolab.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Stats", "item": "https://lottery.artivicolab.com/stats.html" }
+        ]
       }
     </script>
   </head>
@@ -133,89 +120,24 @@
       </header>
 
       <main class="scroll">
-        <p class="sr-only">
-          Number Lab is a free Georgia Lottery number generator. Pull the lever
-          for a Mega Millions quick pick, choose a strategy, and reveal Number
-          Lab's 15 model predictions based on real past winning numbers.
-        </p>
+        <section class="view" data-view="stats">
+          <h1 class="title">Probability &amp; stats</h1>
+          <p id="dataWindow" class="lede"></p>
 
-        <section class="view" data-view="generate">
-          <div class="draw-grid">
-            <div class="draw-left">
-              <h1 class="title">Draw your luck</h1>
-              <p class="lede" id="strategyDesc"></p>
-
-              <div class="machine" id="machine">
-                <div class="globe-wrap">
-                  <div class="globe-ring"></div>
-                  <div class="globe">
-                    <div class="globe-balls" id="globeBalls"></div>
-                    <div class="globe-glare"></div>
-                  </div>
-                  <div class="globe-status" id="machineStatus">READY</div>
-                </div>
-                <div class="machine-neck"></div>
-                <div class="machine-base"></div>
-              </div>
-
-              <button id="generate" class="lever">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M12 2c.6 4.8 2.6 6.8 7.4 7.4C14.6 10 12.6 12 12 16.8 11.4 12 9.4 10 4.6 9.4 9.4 8.8 11.4 6.8 12 2Z" />
-                </svg>
-                <span class="lever-label">Pull to draw</span>
-              </button>
-
-              <p class="fairness-note" role="note">
-                Just for fun — no strategy changes your odds. Every combination
-                is equally likely on every draw.
-              </p>
-
-              <div class="options">
-                <div class="row-between">
-                  <span class="row-label" id="strategyLabel">Strategy</span>
-                  <div class="select-field">
-                    <select id="strategy" aria-labelledby="strategyLabel"></select>
-                    <span class="chev" aria-hidden="true">⌄</span>
-                  </div>
-                </div>
-                <div class="row-between">
-                  <span class="row-label">Number of sets</span>
-                  <div class="stepper">
-                    <button type="button" class="stepper-btn" data-step="-1" aria-label="Fewer sets">−</button>
-                    <span class="stepper-value" id="setsValue" role="status" aria-live="polite" aria-label="Number of sets">1</span>
-                    <button type="button" class="stepper-btn" data-step="1" aria-label="More sets">+</button>
-                    <input type="hidden" id="sets" value="1" />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="draw-right">
-              <div class="rule"></div>
-              <div class="eyebrow">Your numbers</div>
-              <div class="reel">
-                <div class="reel-inner">
-                  <div id="results" class="results"></div>
-                  <div id="resultsMeta" class="results-meta"></div>
-                </div>
-              </div>
-              <button id="clear" class="text-btn center">Clear results</button>
-
-              <div id="ourReveal" class="our-reveal" hidden>
-                <button id="ourStar" class="our-star" aria-expanded="false" aria-controls="ourPredictions">
-                  <span class="star-glyph" aria-hidden="true">
-                    <svg viewBox="0 0 24 24">
-                      <path d="M12 2.2l2.9 6.26 6.86.72-5.12 4.6 1.43 6.74L12 17.7l-6 3.62 1.43-6.74L2.3 9.18l6.86-.72z" />
-                    </svg>
-                  </span>
-                  <span class="our-star-label" id="ourStarLabel">
-                    Reveal Number Lab's 15 predictions
-                  </span>
-                </button>
-                <div id="ourPredictions" class="our-predictions" hidden></div>
-              </div>
-            </div>
+          <div class="hero-odds">
+            <div class="hero-inner" id="statsHero"></div>
           </div>
+
+          <div id="statFigures"></div>
+
+          <div class="eyebrow stats-eyebrow">Prize odds · theoretical (1 in)</div>
+          <div id="oddsTable" class="odds-card"></div>
+
+          <div class="eyebrow stats-eyebrow">Goodness of fit vs. pure chance</div>
+          <div id="fitStats"></div>
+
+          <div class="eyebrow stats-eyebrow">Draw distribution</div>
+          <div id="distStats"></div>
         </section>
 
         <footer class="site-footer">
@@ -256,7 +178,7 @@
       </button>
       <nav class="tab-bar" aria-label="Primary">
         <div class="tab-bar-inner">
-          <a class="tab active" data-target="generate" href="/" aria-current="page">
+          <a class="tab" data-target="generate" href="/">
             <svg class="tab-glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c.6 4.8 2.6 6.8 7.4 7.4C14.6 10 12.6 12 12 16.8 11.4 12 9.4 10 4.6 9.4 9.4 8.8 11.4 6.8 12 2Z" /><path d="M18.5 14c.25 1.9 1 2.65 2.9 2.9-1.9.25-2.65 1-2.9 2.9-.25-1.9-1-2.65-2.9-2.9 1.9-.25 2.65-1 2.9-2.9Z" /></svg>
             <span class="tab-label">Draw</span>
           </a>
@@ -264,7 +186,7 @@
             <svg class="tab-glyph stroke" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="8" rx="8" ry="3.4" /><path d="M4 8v4c0 1.9 3.6 3.4 8 3.4s8-1.5 8-3.4V8" /><path d="M4 12v4c0 1.9 3.6 3.4 8 3.4s8-1.5 8-3.4v-4" /></svg>
             <span class="tab-label">Build</span>
           </a>
-          <a class="tab" data-target="stats" href="/stats.html">
+          <a class="tab active" data-target="stats" href="/stats.html" aria-current="page">
             <svg class="tab-glyph stroke tab-stats" viewBox="0 0 24 24" aria-hidden="true"><line class="bar bar1" x1="5" y1="20" x2="5" y2="13" /><line class="bar bar2" x1="12" y1="20" x2="12" y2="6" /><line class="bar bar3" x1="19" y1="20" x2="19" y2="10" /></svg>
             <span class="tab-label">Stats</span>
           </a>

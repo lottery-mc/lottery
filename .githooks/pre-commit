@@ -1,0 +1,7 @@
+#!/bin/sh
+# Keep SEO freshness dates current on every commit so Google sees the site as
+# up to date. Stamps today's date into sitemap <lastmod> and JSON-LD
+# "dateModified", then re-stages the touched files.
+node .githooks/stamp-dates.js 2>/dev/null || exit 0
+git add sitemap.xml index.html build.html stats.html account.html 2>/dev/null
+exit 0
