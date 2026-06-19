@@ -1,12 +1,15 @@
 # Number Lab — TODO
 
 ## Before deploy
-- [ ] Replace placeholder domain `https://your-domain.example/` in `index.html`
-      (`<link rel="canonical">`, `og:url`, and the JSON-LD `url`) with the real
-      domain.
-- [ ] Add a favicon and an `og:image` / `twitter:image` (1200×630) so social
-      shares render a card. (Logo prompt is ready — generate the logo first.)
-- [x] Add `robots.txt` and `sitemap.xml` (domain placeholder — update on deploy).
+- [x] Real domain wired everywhere: `https://lottery.artivicolab.com/`
+      (canonical, og:url, JSON-LD, sitemap.xml, robots.txt).
+- [x] SVG favicon (`favicon.svg`, clover-coin) linked.
+- [ ] **Create `og-image.png` (1200×630)** and drop it at the site root — the
+      tags already point to `/og-image.png`. Until it exists, social cards have
+      no image. (Use the logo prompt in the chat / generate from `favicon.svg`.)
+- [ ] Optional: add `favicon.ico` + `apple-touch-icon.png` (PNG fallbacks for
+      older clients; SVG covers modern ones).
+- [x] Add `robots.txt` and `sitemap.xml`.
 
 ## Analytics (open question)
 - [ ] User said "we are just doing ga for now." Interpreted as **Georgia**
